@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko"
+         xmlns="http://www.w3.org/1999/xhtml"
+         xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- jquery -->
+
+    <script src="//code.jquery.com/jquery.min.js"></script>
+
+    <!-- BootStrap -->
+
+    <!-- 합쳐지고 최소화된 최신 CSS -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+
+    <!-- 부가적인 테마 -->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+
+    <!-- 합쳐지고 최소화된 최신 자바스크립트 -->
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<table class="table table-striped">
+
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col" style="width: 10%">no</th>
+        <th scope="col">제목</th>
+        <th scope="col" style="width: 15%">작성자</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr th:each="board : ${boardList}">
+        <th scope="row" th:text="${boardStat.index + 1}">1</th>
+        <td th:text="${board.title}"></td>
+        <td th:text="${board.user}"></td>
+    </tr>
+    </tbody>
+
+</table>
+
+<nav>
+    <ul class="pagination justify-content-center">
+        <li class="page-item"><a class="page-link" th:href="@{/?page=1}" aria-label="Previous"><span aria-hidden="true">처음</span></a></li>
+        <li class="page-item"> <a class="page-link" th:href="@{/?page={page} (page = ${pagination.prevBlock})}" aria-label="Previous"><span aria-hidden="true">이전</span></a></li>
+
+        <th:block  th:with="start = ${pagination.startPage}, end = ${pagination.endPage}">
+            <li class="page-item"
+                th:with="start = ${pagination.startPage}, end = ${pagination.endPage}"
+                th:each="pageButton : ${#numbers.sequence(start, end)}">
+                <a class="page-link" th:href="@{/?page={page} (page = ${pageButton})}" th:text=${pageButton}></a>
+            </li>
+        </th:block>
+        <li class="page-item"><a class="page-link" th:href="@{?page={page} (page = ${pagination.nextBlock})}" aria-label="Next"><span aria-hidden="true">다음</span></a></li>
+        <li class="page-item"><a class="page-link" th:href="@{?page={page} (page = ${pagination.totalPageCnt})}" aria-label="Previous"><span aria-hidden="true">끝</span></a></li>
+    </ul>
+</nav>
+
+
+</body>
+</html>
